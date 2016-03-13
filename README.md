@@ -7,6 +7,8 @@
 - gulp
 - gulp-webserver
 
+If you want to use `Radium`, switch the branch to `radium`.
+
 ## Installation
 
 ```

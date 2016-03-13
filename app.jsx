@@ -3,15 +3,15 @@ import ReactDOM from 'react-dom'
 import Message from './message.jsx'
 
 class App extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			person: {
-				name: 'Yamada',
-				age: 20
-			}
-		};
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      person: {
+        name: 'Yamada',
+        age: 20
+      }
+    };
+  }
 
   onChange(event) {
     this.setState({

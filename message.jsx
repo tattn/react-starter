@@ -4,7 +4,7 @@ export default class Message extends React.Component {
   render() {
     return (
       <p>
-        Hello, {this.props.name}. You are {this.props.age}.
+        Hello, {this.props.name}. You are {this.props.age} years old.
       </p>
     );
   }

@@ -26,7 +26,7 @@ class App extends React.Component {
     return (
       <div>
         <input type="text" value={this.state.person.name} onChange={this.onChange.bind(this)} />
-        <Message name={this.state.person.name} age={this.state.person.age} />
+        <Message kind='primary' name={this.state.person.name} age={this.state.person.age} />
       </div>
     );
   }

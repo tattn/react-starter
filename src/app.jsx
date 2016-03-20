@@ -1,8 +1,7 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React, { PropTypes } from 'react';
 import Message from './message.jsx'
 
-class App extends React.Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,12 +26,12 @@ class App extends React.Component {
       <div>
         <input type="text" value={this.state.person.name} onChange={this.onChange.bind(this)} />
         <Message kind='primary' name={this.state.person.name} age={this.state.person.age} />
+        {this.props.children}
       </div>
     );
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('container')
-);
+App.propTypes = {
+  children: PropTypes.object
+};

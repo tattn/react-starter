@@ -5,7 +5,7 @@ import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
 import routes from './routes.jsx'
 
-let app = express();
+const app = express();
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.get('api/items', (req, res, next) => {
@@ -17,7 +17,22 @@ app.get('api/items', (req, res, next) => {
 });
 
 app.get('*', (req, res, next) => {
-  render(req, res);
+  match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
+    if (error) {
+      res.status(500).send(error.message)
+    }
+    else if (redirectLocation) {
+      res.redirect(302, redirectLocation.pathname + redirectLocation.search)
+    }
+    else if (renderProps) {
+      const content = renderToString(<RouterContext {...renderProps} />);
+      const page = layout(content);
+      res.status(200).send(page);
+    }
+    else {
+      res.status(404).send('Not found');
+    }
+  })
 });
 
 app.listen(3000, () => {
@@ -35,30 +50,10 @@ function layout(content) {
       <meta charset="utf-8">
       <title>React Server Rendering sample</title>
     </head>
-
     <div id="app">${content}</div>
-
     <script src="js/bundle.js"></script>
     </body>
     </html>
   `;
 }
 
-function render(req, res) {
-  match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
-    if (error) {
-      res.status(500).send(error.message)
-    }
-    else if (redirectLocation) {
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-    }
-    else if (renderProps) {
-      const content = renderToString(<RouterContext {...renderProps} />);
-      const page = layout(content);
-      res.status(200).send(page);
-    }
-    else {
-      res.status(404).send('Not found');
-    }
-  })
-};

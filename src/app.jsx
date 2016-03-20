@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Message from './message.jsx'
+import Message from './Message.jsx'
 
 export default class App extends React.Component {
   constructor(props) {

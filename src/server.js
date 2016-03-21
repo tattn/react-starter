@@ -2,8 +2,7 @@ import express from 'express'
 import path from 'path'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import { match, RouterContext } from 'react-router'
-import routes from './routes'
+import { routes, serve } from './routes'
 
 const app = express();
 app.use(express.static(path.join(__dirname, '..', 'public')));
@@ -17,22 +16,7 @@ app.get('api/items', (req, res, next) => {
 });
 
 app.get('*', (req, res, next) => {
-  match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
-    if (error) {
-      res.status(500).send(error.message)
-    }
-    else if (redirectLocation) {
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-    }
-    else if (renderProps) {
-      const content = renderToString(<RouterContext {...renderProps} />);
-      const page = layout(content);
-      res.status(200).send(page);
-    }
-    else {
-      res.status(404).send('Not found');
-    }
-  })
+  serve(req, res);
 });
 
 app.listen(3000, () => {

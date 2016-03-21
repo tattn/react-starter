@@ -7,7 +7,7 @@ import nodemon from 'gulp-nodemon'
 import babel from 'gulp-babel'
 
 gulp.task('browserify', () => {
-  browserify('./src/client.jsx', { debug: true })
+  browserify('./src/client.js', { debug: true })
     .transform(babelify)
     .bundle()
     .on("error", (err) => { console.log(`Error : ${err.message}`); })
@@ -16,7 +16,7 @@ gulp.task('browserify', () => {
 });
 
 gulp.task('watch', () => {
-  gulp.watch('./src/**/*.jsx', ['browserify'])
+  gulp.watch('./src/**/*.js', ['browserify'])
 });
 
 // gulp.task('webserver', () => {
@@ -30,10 +30,10 @@ gulp.task('watch', () => {
 
 gulp.task('server', () => {
   nodemon({
-    script: './src/server.jsx',
-    ext: 'jsx',
+    script: './src/server.js',
+    ext: 'js',
     execMap: {
-      "jsx": "./node_modules/.bin/babel-node"
+      "js": "./node_modules/.bin/babel-node"
     },
     env: { 'NODE_ENV': 'development' }
   });

@@ -3,7 +3,7 @@ import path from 'path'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
-import routes from './routes.jsx'
+import routes from './routes'
 
 const app = express();
 app.use(express.static(path.join(__dirname, '..', 'public')));
@@ -50,6 +50,7 @@ function layout(content) {
       <meta charset="utf-8">
       <title>React Server Rendering sample</title>
     </head>
+    <body>
     <div id="app">${content}</div>
     <script src="js/bundle.js"></script>
     </body>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router';
 
-import App from './App.jsx';
-import {Items, Item} from './Items.jsx';
+import App from './App';
+import {Items, Item} from './Items';
 
 export default (
   <Route path="/" component={App}>

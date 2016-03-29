@@ -1,8 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router'
 
-export default class Items extends React.Component {
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as ItemActions from './actions/item'
+
+
+class Items extends React.Component {
+  componentWillMount() {
+    this.props.fetchItems();
+  }
+
   render() {
+    console.log(`render: ${this.props.items}`);
     const { items = [] } = this.props;
     return (
       <div>
@@ -13,7 +23,7 @@ export default class Items extends React.Component {
           })}
         </ul>
       </div>
-    );
+    )
   }
 }
 
@@ -22,7 +32,7 @@ Items.propTypes = {
 };
 
 export class Item extends React.Component {
-  componentDidMount() {
+  componentWillMount() {
     this.setState({
       // item: findItemById(this.props.params.id)
       item: { id: this.props.params.id, name: 'hoge' }
@@ -37,3 +47,16 @@ export class Item extends React.Component {
     )
   }
 }
+
+
+function mapStateToProps(state) {
+  return {
+    items: state.item.items
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ItemActions, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Items)
